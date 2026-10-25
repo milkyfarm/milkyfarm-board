@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>出勤ボード</title>
+
+  <!-- iPhone：ホーム画面のアイコンと名前 -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="出勤ボード">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Android・パソコン用 -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <meta name="theme-color" content="#ea580c">
+
+  <style>
+    html, body { margin: 0; height: 100%; background: #fafaf9; }
+    iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+  </style>
+</head>
+<body>
+  <!-- ▼▼ ここをGASアプリのURL（/exec で終わるもの）に差し替え ▼▼ -->
+  <iframe id="app" src="https://script.google.com/macros/s/AKfycbx7GinM2mNXY6NU_2JhRmhntkZ1oa9ouYVCFJvOTaw-sY_KUqo9UVvglJ6ZmAh0CgRK/exec" allow="clipboard-write"></iframe>
+
+  <script>
+    // 出勤ボードの中のリンク（前日・翌日・一覧など）を、この画面の中で開く
+    window.addEventListener('message', function (e) {
+      if (!/\.googleusercontent\.com$/.test(e.origin)) return;
+      var url = e.data && e.data.milkyNav;
+      if (typeof url !== 'string') return;
+      if (url.indexOf('https://script.google.com/') !== 0) return;
+      document.getElementById('app').src = url;
+    });
+  </script>
+</body>
+</html>
